@@ -2,17 +2,17 @@ package com.example.springbootstart.interceptor;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.coyote.BadRequestException;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 
-
+@Component
 public class IdempotentRequestInterceptor implements HandlerInterceptor {
 
     private static final String IDEMPOTENCY_KEY = "Idempotency-Key";
