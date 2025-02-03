@@ -11,11 +11,13 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
+import java.util.Set;
 
 @Component
 public class IdempotentRequestInterceptor implements HandlerInterceptor {
 
     private static final String IDEMPOTENCY_KEY = "Idempotency-Key";
+    private static final Set<String> METHODS = Set.of("POST", "PUT");
 
     private static final Logger logger = LoggerFactory.getLogger(IdempotentRequestInterceptor.class);
 
@@ -27,6 +29,11 @@ public class IdempotentRequestInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        String method = request.getMethod();
+        if (!METHODS.contains(method)) {
+            return true;
+        }
+
         String key = request.getHeader(IDEMPOTENCY_KEY);
         if (key == null) {
             return true;
