@@ -66,11 +66,13 @@ public class IdempotentRequestInterceptorTest {
         // 중복요청
         when(bucket.setIfAbsent(anyString(), any(Duration.class))).thenReturn(false);
 
+        // 중복요청일때 DuplicateRequestException 발생해야 함
         assertThrows(
                 DuplicateRequestException.class,
                 () -> interceptor.preHandle(request, response, new Object()),
                 "POST 중복 요청시 DuplicateRequestException 발생"
         );
+        // redis 호출 검증
         verify(bucket).setIfAbsent(eq("duplicate-key"), any(Duration.class));
     }
 }
