@@ -1,5 +1,6 @@
 package com.example.springbootstart.interceptor;
 
+import com.example.springbootstart.exception.DuplicateRequestException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.redisson.api.RBucket;
@@ -43,7 +44,7 @@ public class IdempotentRequestInterceptor implements HandlerInterceptor {
         boolean success = bucket.setIfAbsent(key, Duration.of(3, ChronoUnit.SECONDS));
         if (!success) {
             logger.error("duplicated request. key : {}", key);
-            throw new IllegalArgumentException();
+            throw new DuplicateRequestException("duplicated request");
         }
         return true;
     }
