@@ -10,11 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
-import org.springframework.data.redis.core.convert.Bucket;
 
 import java.time.Duration;
 
@@ -27,7 +25,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class IdempotentRequestInterceptorTest {
 
-    @Mock
+    @Mock(strictness = Mock.Strictness.LENIENT)
     private RedissonClient redissonClient;
 
     @Mock
