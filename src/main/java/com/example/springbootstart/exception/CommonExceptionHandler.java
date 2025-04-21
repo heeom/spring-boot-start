@@ -13,8 +13,8 @@ public class CommonExceptionHandler {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<String> illegalArgumentException(IllegalArgumentException e) {
+    public ResponseEntity<String> illegalArgumentExceptionHandler(IllegalArgumentException e) {
         logger.info("IllegalArgumentException Handler : {}", e.getMessage());
-        return ResponseEntity.badRequest().body(e.getMessage());
+        return ResponseEntity.badRequest().body("Handled By illegalArgumentExceptionHandler");
     }
 }
