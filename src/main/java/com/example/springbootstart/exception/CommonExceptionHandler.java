@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class CustomExceptionHandler {
+public class CommonExceptionHandler {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
