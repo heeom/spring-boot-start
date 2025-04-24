@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice(annotations = SpecialController.class)
-public class CommonExceptionHandler {
+public class SpecialExceptionHandler {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> illegalArgumentExceptionHandler(IllegalArgumentException e) {
-        logger.info("IllegalArgumentException Handler : {}", e.getMessage());
+        logger.info("CommonExceptionHandler : IllegalArgumentException Handler : {}", e.getMessage());
         return ResponseEntity.badRequest().body("Handled By illegalArgumentExceptionHandler");
     }
 }
