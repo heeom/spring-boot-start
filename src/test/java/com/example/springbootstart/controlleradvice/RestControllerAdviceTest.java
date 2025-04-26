@@ -1,14 +1,12 @@
 package com.example.springbootstart.controlleradvice;
 
-import com.example.springbootstart.interceptor.IdempotentRequestInterceptor;
 import jakarta.servlet.ServletException;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultActions;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,14 +23,16 @@ public class RestControllerAdviceTest {
     private MockMvc mockMvc;
 
     @Test
-    void specialController에만_advice적용된다() throws Exception {
+    @DisplayName("SpecialApi 에서 발생한 예외는 SpecialExceptionHandler 에서 핸들링 되어야 한다.")
+    void specialApi_shouldHandledBySpecialExceptionHandler() throws Exception {
         mockMvc.perform(get("/api/special"))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string(containsString("Handled By illegalArgumentExceptionHandler")));
     }
 
     @Test
-    void normalController에는_advice적용안된다() throws Exception {
+    @DisplayName("NormalApi 에서 발생한 예외는 SpecialExceptionHandler 에서 핸들링 되지 않는다.")
+    void normalApi_doesNotHandledBySpecialExceptionHandler() {
         Exception exception = assertThrows(ServletException.class, () -> {
             mockMvc.perform(get("/api/normal")).andReturn();
         });
